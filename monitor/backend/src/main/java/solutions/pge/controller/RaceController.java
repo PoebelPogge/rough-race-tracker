@@ -1,13 +1,11 @@
 package solutions.pge.controller;
 
 import io.quarkus.vertx.ConsumeEvent;
+import io.vertx.core.eventbus.EventBus;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import solutions.pge.SerialPortInitializer;
-import solutions.pge.events.CreateRaceEvent;
-import solutions.pge.events.StartRaceEvent;
-import solutions.pge.events.StopRaceEvent;
-import solutions.pge.events.TimeMeasurementEvent;
+import solutions.pge.events.*;
 import solutions.pge.exceptions.RaceNotReadyException;
 import solutions.pge.models.Buggy;
 import solutions.pge.models.Race;
@@ -18,9 +16,11 @@ public class RaceController {
 
     @Inject
     TournamentController tournamentController;
-
     @Inject
     SerialPortInitializer serialPortCommunication;
+
+    @Inject
+    EventBus bus;
 
     private Race currentRace;
 
@@ -62,6 +62,7 @@ public class RaceController {
 
     @ConsumeEvent(TimeMeasurementEvent.NAME)
     public void onTimeMeasurementEvent(TimeMeasurementEvent event){
-        currentRace.takeTime(event.racerId());
+        var measurement = currentRace.takeTime(event.racerId());
+        bus.publish(MeasurementEvent.NAME,new MeasurementEvent(measurement));
     }
 }

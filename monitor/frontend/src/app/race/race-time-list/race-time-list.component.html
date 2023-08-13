@@ -1,0 +1,5 @@
+<p>race-time-list works!</p>
+<span>Start: {{start?.time | date : 'short'}}</span>
+<div *ngFor="let time of measurements; let i = index" [attr.data-index]="i">
+    <span *ngIf="i > 0">{{time.time | date : 'HH:mm:ss:SSS'}} -> {{diffs | laptime}}</span>
+</div>

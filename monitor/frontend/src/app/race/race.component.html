@@ -1,0 +1,6 @@
+<p>race works!</p>
+<div style="width: 100%;" *ngFor="let buggy of ($race | async)?.buggies">
+  <div style="float:left;">
+    <app-race-time-list [tagId]="buggy.tagId"></app-race-time-list>
+  </div>
+</div>

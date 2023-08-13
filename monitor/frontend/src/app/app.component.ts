@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {webSocket, WebSocketSubject} from 'rxjs/webSocket';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'rough-monitor';
+  //socket: WebSocketSubject<any> = webSocket('ws://localhost:8080/race/desktop');
+
+  constructor(){
+
+  }
+
 }

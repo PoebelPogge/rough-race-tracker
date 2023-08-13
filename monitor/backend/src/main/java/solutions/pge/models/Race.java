@@ -55,18 +55,20 @@ public class Race {
         var timestamp = OffsetDateTime.now();
         for (Buggy buggy : buggies) {
             List<Measurement> times = new ArrayList<>();
-            times.add(Measurement.start(timestamp));
+            times.add(Measurement.start(buggy.getTagId(), timestamp));
             measurements.put(buggy, times);
         }
     }
 
-    public void takeTime(String tagId){
+    public Measurement takeTime(String tagId){
         var buggy = getBuggy(tagId);
         var times = measurements.get(buggy);
         if(null == times){
             times = new ArrayList<>();
         }
-        times.add(new Measurement(OffsetDateTime.now()));
+        var result = new Measurement(tagId, OffsetDateTime.now());
+        times.add(result);
+        return result;
     }
 
     public void stop(){
