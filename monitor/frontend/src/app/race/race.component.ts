@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Tournament } from '../tournament/tournament.model';
 import { Race } from './race.model';
 import { RaceService } from './race.service';
+import { MatDialog } from '@angular/material/dialog';
+import { Racer } from '../racer/racer.model';
 
 @Component({
   selector: 'app-race',
@@ -14,7 +16,37 @@ export class RaceComponent {
 
   public $race: Observable<Race>
 
-  constructor(private raceSercice: RaceService){
+  constructor(private raceSercice: RaceService, public dialog: MatDialog){
     this.$race = raceSercice.getCurrentRace();
   }
+
+  openCreateRacerDialog(){
+    const dialogRef = this.dialog.open(AddRacerDialog);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    })
+  }
+
+  addRacer(){
+
+  }
 }
+
+@Component({
+  selector: 'app-add-racer',
+  templateUrl: './add.racer.dialog.html',
+})
+export class AddRacerDialog {
+
+  $tournament: Observable<Tournament>
+
+  constructor(private tournamentService: TournamentService){
+    this.$tournament = tournamentService.getCurrentTournament();
+  }
+
+  addRacerToRace(racer: Racer){
+    
+  }
+}
+

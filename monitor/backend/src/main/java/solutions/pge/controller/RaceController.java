@@ -4,7 +4,7 @@ import io.quarkus.vertx.ConsumeEvent;
 import io.vertx.core.eventbus.EventBus;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import solutions.pge.SerialPortInitializer;
+import solutions.pge.serial.SerialPortInitializer;
 import solutions.pge.events.*;
 import solutions.pge.exceptions.RaceNotReadyException;
 import solutions.pge.models.Buggy;

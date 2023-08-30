@@ -44,11 +44,16 @@ export class TournamentComponent {
 })
 export class CreateTournamentDialog {
 
+  location = "";
+
   constructor(private tournamentService: TournamentService){
 
   }
 
   public createTournament() {
-    this.tournamentService.createNewTournament("Rethorn");
+    console.log("Location: -> " + this.location)
+    if(this.location != ""){
+      this.tournamentService.createNewTournament(this.location);
+    }
   }
 }

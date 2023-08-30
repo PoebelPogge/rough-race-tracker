@@ -1,0 +1,21 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>Teilnehmer hinzufügen</mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+        <mat-form-field>
+          <mat-label>Startnummer</mat-label>
+          <input matInput placeholder="zB. 11" [(ngModel)]="number">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Vorname</mat-label>
+            <input matInput placeholder="zB. Max" [(ngModel)]="firstname">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Nachname</mat-label>
+            <input matInput placeholder="zB. Mustermann" [(ngModel)]="lastname">
+          </mat-form-field>
+        <button mat-button mat-dialog-close (click)="submit()">Erstellen</button>
+    </mat-card-actions>
+  </mat-card>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,18 +15,25 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
 import { RouterModule } from '@angular/router';
-import { RaceComponent } from './race/race.component';
-import { RacerComponent } from './racer/racer.component';
+import { AddRacerDialog, RaceComponent } from './race/race.component';
+import { CreateRacerDialog, RacerComponent } from './racer/racer.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
 import { RaceTimeListComponent } from './race/race-time-list/race-time-list.component';
 import { LaptimePipe } from './race/laptime.pipe';
+import {MatInputModule} from '@angular/material/input';
+import {FormsModule} from '@angular/forms';
+import { DeviceNotConnectedDialog } from './system-status/system-status.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     TournamentComponent,
     CreateTournamentDialog,
+    CreateRacerDialog,
+    AddRacerDialog,
+    DeviceNotConnectedDialog,
     RaceComponent,
     RacerComponent,
     RaceTimeListComponent,
@@ -34,6 +41,7 @@ import { LaptimePipe } from './race/laptime.pipe';
   ],
   imports: [
     BrowserModule,
+    MatInputModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
@@ -46,6 +54,8 @@ import { LaptimePipe } from './race/laptime.pipe';
     MatDialogModule,
     MatCardModule,
     MatGridListModule,
+    MatCheckboxModule,
+    FormsModule,
     MatTableModule,
     RouterModule.forRoot([
       { path: '', redirectTo: 'race', pathMatch: 'full'},

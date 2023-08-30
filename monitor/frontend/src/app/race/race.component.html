@@ -1,6 +1,10 @@
-<p>race works!</p>
 <div style="width: 100%;" *ngFor="let buggy of ($race | async)?.buggies">
   <div style="float:left;">
     <app-race-time-list [tagId]="buggy.tagId"></app-race-time-list>
   </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="openCreateRacerDialog()">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>

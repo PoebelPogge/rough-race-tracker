@@ -11,7 +11,7 @@ import { Measurement } from '../measurement/measurement.model';
 export class RaceService {
 
   private BASE_URL: string = "http://localhost:8080/race"
-  private socket: WebSocketSubject<any> = webSocket('ws://localhost:8080/race/desktop');
+  private socket: WebSocketSubject<any> = webSocket('ws://localhost:8080/race/local-desktop');
 
   constructor(private http: HttpClient) { }
 

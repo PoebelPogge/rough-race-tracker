@@ -1,0 +1,13 @@
+<div *ngFor="let racer of ($tournament | async)!.participants">
+    <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{racer.firstName}} {{racer.lastName}}</mat-card-title>
+          <mat-card-subtitle>{{racer.number}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+            <mat-checkbox (ngModelChange)="addRacerToRace(racer)">
+Teilnehmen
+</mat-checkbox>
+        </mat-card-actions>
+      </mat-card>
+</div>
