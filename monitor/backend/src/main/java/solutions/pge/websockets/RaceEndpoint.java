@@ -1,6 +1,5 @@
 package solutions.pge.websockets;
 
-import io.quarkus.vertx.ConsumeEvent;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.websocket.OnClose;
@@ -10,43 +9,36 @@ import jakarta.websocket.Session;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
 import solutions.pge.controller.RaceController;
-import solutions.pge.events.MeasurementEvent;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import solutions.pge.models.Race;
+import solutions.pge.websockets.encoder.RaceEncoder;
+import solutions.pge.websockets.encoder.SystemStatusEncoder;
 
 @ServerEndpoint(value = "/race/{clientId}", encoders = RaceEncoder.class)
 @ApplicationScoped
-public class RaceEndpoint {
-
-    private final Map<String, Session> sessions = new ConcurrentHashMap<>();
+public class RaceEndpoint extends AbstractJsonEndpoint<Race> {
 
     @Inject
     RaceController raceController;
 
     @OnOpen
     public void onOpen(Session session, @PathParam("clientId") String clientId){
-        sessions.put(clientId, session);
+        openSession(session, clientId);
     }
 
     @OnClose
     public void onClose(Session session, @PathParam("clientId") String clientId){
-        sessions.remove(clientId);
+        closeSession(session, clientId);
     }
+
 
     @OnError
     public void onError(Session session, @PathParam("clientId") String clientId, Throwable throwable) {
-        sessions.remove(clientId);
+        sessionError(session, clientId, throwable);
+    }
+    @Override
+    Race sendInitialMessage() {
+        return raceController.getCurrentRace();
     }
 
-    @ConsumeEvent(MeasurementEvent.NAME)
-    public void broadcast(MeasurementEvent event) {
-        sessions.values().forEach(s -> {
-            s.getAsyncRemote().sendObject(event.measurement(), result ->  {
-                if (result.getException() != null) {
-                    System.out.println("Unable to send message: " + result.getException());
-                }
-            });
-        });
-    }
+
 }

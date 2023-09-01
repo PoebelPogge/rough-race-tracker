@@ -11,16 +11,19 @@ import { Measurement } from '../measurement/measurement.model';
 export class RaceService {
 
   private BASE_URL: string = "http://localhost:8080/race"
-  private socket: WebSocketSubject<any> = webSocket('ws://localhost:8080/race/local-desktop');
+  private measurementsSocket: WebSocketSubject<any> = webSocket('ws://localhost:8080/race/local-desktop/measurements');
+  private currentRaceSocket: WebSocketSubject<any> = webSocket('ws://localhost:8080/race/local-desktop');
 
-  constructor(private http: HttpClient) { }
+
+  constructor() { }
 
   public getCurrentRace(): Observable<Race>{
-    return this.http.get<Race>(this.BASE_URL);
+    console.log("getCurrentRace called");
+    return this.currentRaceSocket.asObservable();
   }
 
-  public getMeasurements(): Observable<Measurement> {
-    return this.socket.asObservable();
+  public getMeasurements(): Observable<any> {
+    return this.measurementsSocket.asObservable();
   }
 
   public createNewRace() {

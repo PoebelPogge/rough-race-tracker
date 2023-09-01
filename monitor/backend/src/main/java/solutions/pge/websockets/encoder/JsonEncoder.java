@@ -1,22 +1,24 @@
-package solutions.pge.websockets;
+package solutions.pge.websockets.encoder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.websocket.EncodeException;
 import jakarta.websocket.Encoder;
 import jakarta.websocket.EndpointConfig;
-import solutions.pge.models.SystemStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class SystemStatusEncoder implements Encoder.Text<SystemStatus> {
+public abstract class JsonEncoder<T> implements Encoder.Text<T> {
 
-    ObjectMapper mapper = new ObjectMapper();
+    public abstract ObjectMapper provideMapper();
 
     @Override
-    public String encode(SystemStatus systemStatus) throws EncodeException {
+    public String encode(T data) throws EncodeException {
         try {
-            return mapper.writeValueAsString(systemStatus);
+            var result = provideMapper().writeValueAsString(data);
+            return result;
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new EncodeException(data, "Unable to encode data", e);
         }
     }
 

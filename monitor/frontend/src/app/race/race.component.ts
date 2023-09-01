@@ -18,6 +18,7 @@ export class RaceComponent {
 
   constructor(private raceSercice: RaceService, public dialog: MatDialog){
     this.$race = raceSercice.getCurrentRace();
+    raceSercice.getCurrentRace().subscribe(console.log);
   }
 
   openCreateRacerDialog(){
